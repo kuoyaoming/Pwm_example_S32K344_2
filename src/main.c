@@ -214,7 +214,7 @@ static RgbColor_t HsvToRgb(HsvColor_t hsv)
 
 
 /**
-* @brief        Update RGB LED with smooth color transitions
+* @brief        Update RGB LED with smooth color transitions.
 * @details      Focus on showcasing all color combinations with fixed brightness
 */
 static void UpdateRgbLed(uint32 cycle)
