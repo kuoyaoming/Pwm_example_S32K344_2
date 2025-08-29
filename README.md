@@ -8,6 +8,13 @@ The experiment began with the simplest possible embedded project - blinking an L
 ## Project Overview
 This project is based on the NXP S32K344 microcontroller, using the eMIOS PWM module to control a Cree® PLCC6 3-in-1 SMD LED (CLP6C-FKB) to achieve smooth RGB color transition effects. Through 11 distinct development phases, it has evolved from basic single-color LED blinking to a complete RGB color showcase system, demonstrating the power of AI-assisted iterative development.
 
+## 🎬 Demo Video
+Watch the final result in action - smooth RGB color transitions with 66Hz refresh rate:
+
+![RGB LED Demo](demo.gif)
+
+*The demo shows the complete color spectrum transition: Red → Orange → Yellow → Green → Cyan → Blue → Purple → Magenta → Red, with calibrated brightness and smooth transitions.*
+
 ## Development Environment
 - **IDE**: S32 Design Studio 3.5
 - **RTD Version**: S32K3 5.0.0
