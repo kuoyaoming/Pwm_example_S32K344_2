@@ -1,0 +1,245 @@
+# ===================================================
+# .gitignore for NXP S32 Design Studio Eclipse Project
+# S32K344 Microcontroller Project
+# ===================================================
+
+# ===================================================
+# Build Artifacts and Compiled Files
+# ===================================================
+
+# Build output directories
+Debug*/
+Release*/
+Build*/
+*_FLASH/
+*_RAM/
+
+# Compiled object files
+*.o
+*.obj
+*.elf
+*.hex
+*.bin
+*.srec
+*.mot
+
+# Dependency files
+*.d
+
+# Linker map files
+*.map
+
+# Assembly listing files
+*.lst
+
+# Makefiles (generated)
+makefile
+objects.mk
+sources.mk
+subdir.mk
+
+# Build argument files
+*.args
+
+# ===================================================
+# S32 Design Studio Specific Files
+# ===================================================
+
+# S32DS workspace metadata
+.metadata/
+.default_mex
+*.mex.bak
+
+# Project backup files
+*.bak
+.cproject.bak
+.project.bak
+
+# S32DS generated configuration
+.mcuxpressoide_packages_support/
+.s32ds/
+
+# Code generation artifacts
+generate/
+
+# ===================================================
+# Eclipse IDE Files
+# ===================================================
+
+# Eclipse project files (keep basic ones, ignore generated/cached)
+.settings/
+.loadpath
+.recommenders/
+.target
+.tern-project
+.texlipse
+.cache-main
+.scala_dependencies
+.worksheet
+
+# Local configuration file (uncomment if you want to ignore)
+# .project
+# .cproject
+
+# ===================================================
+# NXP/Freescale MCU Specific
+# ===================================================
+
+# Real-Time Drivers (RTD) if they are generated/downloaded
+# Uncomment if RTD is auto-generated in your workflow
+# RTD/
+
+# Configuration tools output
+ConfigurationMappings.txt
+ClockConfigurationMappings.txt
+ClockYaml.txt
+
+# Pin mux tool outputs (if auto-generated)
+# board/
+
+# ===================================================
+# Development Tools and IDEs
+# ===================================================
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ===================================================
+# Operating System Files
+# ===================================================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+
+# Linux
+*~
+.directory
+.Trash-*
+.nfs*
+
+# ===================================================
+# Version Control
+# ===================================================
+
+# Git
+.git/
+*.orig
+*.rej
+
+# SVN
+.svn/
+
+# Mercurial
+.hg/
+
+# ===================================================
+# Documentation and Logs
+# ===================================================
+
+# Log files
+*.log
+
+# Documentation builds
+doc/html/
+doc/latex/
+doc/build/
+Doxygen/
+
+# ===================================================
+# Temporary and Cache Files
+# ===================================================
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Cache files
+*.cache
+cache/
+
+# Backup files
+*.backup
+*.old
+
+# ===================================================
+# Custom Application Files
+# ===================================================
+
+# Add your custom files/directories to ignore here
+# Example:
+# custom_scripts/
+# private_notes.txt
+
+# ===================================================
+# Keep Important Files (Force Include)
+# ===================================================
+
+# Force include important configuration files even if they match patterns above
+!.project
+!.cproject
+!*.ld
+!linker_*.ld
+
+# Force include source files that might match temp patterns
+!src/
+!include/
+!Project_Settings/Linker_Files/
+!Project_Settings/Startup_Code/
+
+# Force include README and documentation
+!README*
+!CHANGELOG*
+!LICENSE*
+!*.md
