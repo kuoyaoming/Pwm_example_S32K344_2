@@ -1,13 +1,15 @@
 /*==================================================================================================
-*   版權所有 2020 - 2024 NXP
+*   Copyright 2020 - 2024 NXP
 *
-*   NXP 機密專有軟體。此軟體歸 NXP 所有或控制，只能嚴格按照
-*   適用的授權條款使用。透過明確接受這些條款或透過下載、安裝、
-*   啟動和/或以其他方式使用軟體，您同意您已閱讀並同意遵守
-*   並受這些授權條款約束。如果您不同意受適用授權條款約束，
-*   則不得保留、安裝、啟動或以其他方式使用軟體。
+*   NXP Confidential Proprietary. This software is owned or controlled by NXP and may only be
+*   used strictly in accordance with the applicable license terms. By expressly
+*   accepting these terms or by downloading, installing, activating and/or otherwise
+*   using the software, you are agreeing that you have read, and that you agree to
+*   comply with and are bound by, such license terms. If you do not agree to be
+*   bound by the applicable license terms, then you may not retain, install,
+*   activate or otherwise use the software.
 *
-*   此檔案僅包含範例程式碼。它不是生產程式碼交付物的一部分。
+*   This file contains sample code only. It is not part of the production code deliverables.
 ==================================================================================================*/
 
 #ifdef __cplusplus
@@ -15,10 +17,10 @@ extern "C" {
 #endif
 
 /*==================================================================================================
-*                                        包含檔案
-* 1) 系統和專案包含檔案
-* 2) 外部單元所需介面
-* 3) 此單元內部和外部介面
+*                                        INCLUDE FILES
+* 1) system and project includes
+* 2) needed interfaces from external units
+* 3) internal and external interfaces from this unit
 ==================================================================================================*/
 
 #include "Pwm.h"
@@ -27,7 +29,7 @@ extern "C" {
 #include "Mcl.h"
 
 /*==================================================================================================
-*                          本地型別定義 (結構、聯合、列舉)
+*                          LOCAL TYPEDEFS (STRUCTURES, UNIONS, ENUMS)
 ==================================================================================================*/
 
 /* RGB color structure */
@@ -86,11 +88,11 @@ static RgbLedState_t rgb_state;         /* RGB LED state */
 static uint32 rng_seed = 0x12345678U;   /* Random number seed */
 
 /*==================================================================================================
-*                                      全域常數
+*                                      GLOBAL CONSTANTS
 ==================================================================================================*/
 
 /*==================================================================================================
-*                                      全域變數
+*                                      GLOBAL VARIABLES
 ==================================================================================================*/
 
 /*==================================================================================================
@@ -287,7 +289,7 @@ void RgbColorShowcase(void)
 }
 
 /*==================================================================================================
-*                                       全域函數
+*                                       GLOBAL FUNCTIONS
 ==================================================================================================*/
 
 /**

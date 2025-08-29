@@ -1,207 +1,224 @@
 # S32K344 RGB LED PWM Control Project
 
-## 專案概述
-本專案基於NXP S32K344微控制器，使用eMIOS PWM模組控制Cree® PLCC6 3-in-1 SMD LED (CLP6C-FKB)，實現絲滑的RGB色彩變化效果。從最初的單色LED閃爍，逐步演進為完整的RGB色彩展示系統。
+## Project Overview
+This project is based on the NXP S32K344 microcontroller, using the eMIOS PWM module to control a Cree® PLCC6 3-in-1 SMD LED (CLP6C-FKB) to achieve smooth RGB color transition effects. It has evolved from basic single-color LED blinking to a complete RGB color showcase system.
 
-## 硬體配置
-- **微控制器**: S32K344 (ARM Cortex-M7, 48MHz)
-- **RGB LED**: Cree® CLP6C-FKB (6.0x5.0mm PLCC6 封裝)
-- **引腳配置**:
-  - PTA29 (EMIOS_1_CH_12) → 紅色通道 (PwmChannel_0)
-  - PTA30 (EMIOS_1_CH_13) → 綠色通道 (PwmChannel_1)  
-  - PTA31 (EMIOS_1_CH_14) → 藍色通道 (PwmChannel_2)
+## Development Environment
+- **IDE**: S32 Design Studio 3.5
+- **RTD Version**: S32K3 5.0.0
+- **Configuration Tool**: S32 Configuration Tool (.mex)
+- **Compiler**: GCC for ARM
+- **Debugger**: PNE (Pemicro Debug Interface)
 
-## 開發歷程與改進
+## Hardware Configuration
+- **Development Board**: S32K3X4EVB-T172
+- **Microcontroller**: S32K344 (ARM Cortex-M7, 48MHz)
+- **RGB LED**: Cree® CLP6C-FKB (6.0x5.0mm PLCC6 package)
+- **Pin Configuration**:
+  - PTA29 (EMIOS_1_CH_12) → Red channel (PwmChannel_0)
+  - PTA30 (EMIOS_1_CH_13) → Green channel (PwmChannel_1)  
+  - PTA31 (EMIOS_1_CH_14) → Blue channel (PwmChannel_2)
 
-### 階段1: 基礎LED閃爍 (v1.0)
-**目標**: 將原有的每秒開關LED改為呼吸燈效果
-- **原始狀態**: 簡單的LED開關控制
-- **改進內容**: 
-  - 實現漸亮漸暗的呼吸燈效果
-  - 使用PWM控制亮度變化
-  - 基本的延遲控制
+## Development History and Improvements
 
-### 階段2: 多LED呼吸燈 (v2.0)
-**目標**: 擴展到三個LED，各自獨立的呼吸頻率
-- **新增功能**:
-  - 支援PwmChannel_0、PwmChannel_1、PwmChannel_2
-  - 每個LED具有不同的呼吸頻率
-  - 多LED同步控制
-- **遇到問題**: 編譯警告 (unused variable)
-- **解決方案**: 移除未使用的變數宣告
+### Phase 1: Basic LED Blinking (v1.0)
+**Goal**: Convert simple LED on/off to breathing light effect
+- **Original State**: Simple LED switch control
+- **Improvements**: 
+  - Implemented gradual brightness changes (breathing effect)
+  - Used PWM for brightness control
+  - Basic delay control
 
-### 階段3: 硬體配置除錯 (v3.0)
-**問題**: LED無法正常點亮
-- **問題分析**: 
-  - 多個PWM通道共用同一個eMIOS Master Bus
-  - eMIOS配置衝突導致LED無法正常工作
-- **解決方案**:
-  - 分析`.mex`配置文件
-  - 重新配置eMIOS Master Bus分配:
+### Phase 2: Multi-LED Breathing (v2.0)
+**Goal**: Expand to three LEDs with independent breathing frequencies
+- **New Features**:
+  - Support for PwmChannel_0, PwmChannel_1, PwmChannel_2
+  - Different breathing frequencies for each LED
+  - Multi-LED synchronous control
+- **Issues Encountered**: Compilation warnings (unused variable)
+- **Solution**: Removed unused variable declarations
+
+### Phase 3: Hardware Configuration Debugging (v3.0)
+**Problem**: LEDs not lighting up properly
+- **Problem Analysis**: 
+  - Multiple PWM channels sharing the same eMIOS Master Bus
+  - eMIOS configuration conflicts preventing normal LED operation
+- **Solution**:
+  - Analyzed `.mex` configuration files
+  - Reconfigured eMIOS Master Bus allocation:
     - PwmChannel_0 → EMIOS_1_MasteBus1 (CH_8)
     - PwmChannel_1 → EMIOS_1_MasteBus4 (CH_23)
     - PwmChannel_2 → EMIOS_1_MasteBus3 (CH_22)
 
-### 階段4: 配置工具問題解決 (v4.0)
-**問題**: 配置工具中Master Bus選項有限
-- **問題詳情**:
-  - 只有EmiosMclMasterBus_0可選
-  - EMIOS_PWM_IP_BUS_BCDE選項限制
-- **解決過程**:
-  - 分析eMIOS通道映射
-  - 嘗試不同的Bus配置組合
-  - 最終成功配置三個獨立的Master Bus
+### Phase 4: Configuration Tool Issues (v4.0)
+**Problem**: Limited Master Bus options in configuration tool
+- **Problem Details**:
+  - Only EmiosMclMasterBus_0 available
+  - EMIOS_PWM_IP_BUS_BCDE option limitations
+- **Resolution Process**:
+  - Analyzed eMIOS channel mapping
+  - Tried different Bus configuration combinations
+  - Successfully configured three independent Master Buses
 
-### 階段5: 隨機頻率呼吸燈 (v5.0)
-**目標**: 實現此起彼落的動態效果
-- **新增功能**:
-  - 每個LED完成呼吸週期後隨機改變速度
-  - 偽隨機數生成器 (Linear Congruential Generator)
-  - 速度範圍：1-8倍速度因子
-- **效果**: 創造出豐富多變的呼吸節奏
+### Phase 5: Random Frequency Breathing (v5.0)
+**Goal**: Achieve dynamic effects with varying rhythms
+- **New Features**:
+  - Random speed changes after each LED completes breathing cycle
+  - Pseudo-random number generator (Linear Congruential Generator)
+  - Speed range: 1-8x speed factor
+- **Effect**: Created rich and varied breathing rhythms
 
-### 階段6: 呼吸邏輯修正 (v6.0)
-**問題**: LED在最亮時直接關閉，無漸暗效果
-- **問題分析**: 
-  - 漸暗邏輯錯誤
-  - PWM計數器類型 (MCB_UP_COUNTER) 設定不當
-- **解決方案**:
-  - 修正fade-out邏輯
-  - 確保led_step正確遞減
-  - 統一漸亮漸暗的佔空比計算
+### Phase 6: Breathing Logic Correction (v6.0)
+**Problem**: LED turned off directly at maximum brightness without fade-out
+- **Problem Analysis**: 
+  - Fade-out logic error
+  - Incorrect PWM counter type (MCB_UP_COUNTER) settings
+- **Solution**:
+  - Fixed fade-out logic
+  - Ensured led_step decrements correctly
+  - Unified duty cycle calculation for fade-in and fade-out
 
-### 階段7: 程式優化 (v7.0)
-**目標**: 最小化計算和記憶體使用
-- **優化內容**:
-  - 引入LedState_t結構整合LED狀態
-  - 使用位移運算替代除法/模運算
-  - 優化DelayLoop函數
-  - 創建UpdateLed通用函數減少程式碼重複
-  - 所有註解改為中文
+### Phase 7: Code Optimization (v7.0)
+**Goal**: Minimize computation and memory usage
+- **Optimization Content**:
+  - Introduced LedState_t structure to integrate LED states
+  - Used bit shift operations instead of division/modulo
+  - Optimized DelayLoop function
+  - Created UpdateLed generic function to reduce code duplication
+  - Changed all comments to Chinese
 
-### 階段8: 平滑度改善 (v8.0)
-**問題**: 優化後變得生硬，漸變不夠平滑
-- **解決方案**:
-  - 增加步數從8步到64步 (8倍平滑度)
-  - 使用正弦曲線查找表
-  - 調整延遲時間和速度範圍
-- **效果**: 達到極致平滑的漸變效果
+### Phase 8: Smoothness Improvement (v8.0)
+**Problem**: Post-optimization became rigid, transitions not smooth enough
+- **Solution**:
+  - Increased steps from 8 to 64 steps (8x smoother)
+  - Used sine curve lookup table
+  - Adjusted delay time and speed range
+- **Effect**: Achieved extremely smooth transition effects
 
-### 階段9: RGB色彩系統 (v9.0)
-**目標**: 展現所有顏色組合的絲滑變化
-- **重大升級**:
-  - 實現HSV到RGB色彩空間轉換
-  - 支援360度完整色相環
-  - 根據Cree LED datasheet進行色彩校準:
-    - 紅色: 100% (基準)
-    - 綠色: 85% (最亮，需降低)
-    - 藍色: 110% (最暗，需增強)
-  - 128步高精度亮度控制
+### Phase 9: RGB Color System (v9.0)
+**Goal**: Display smooth transitions of all color combinations
+- **Major Upgrade**:
+  - Implemented HSV to RGB color space conversion
+  - Support for complete 360-degree hue wheel
+  - Color calibration based on Cree LED datasheet:
+    - Red: 100% (baseline)
+    - Green: 85% (brightest, needs reduction)
+    - Blue: 110% (dimmest, needs enhancement)
+  - 128-step high-precision brightness control
 
-### 階段10: PWM溢出問題解決 (v10.0)
-**嚴重問題**: 中期亮度出現黑色閃爍
-- **根本原因**: PWM週期設定錯誤
-  - 錯誤設定: PWM週期 0x9000，但MAX_DUTY 0x8000
-  - RGB值超過PWM週期導致計數器溢出
-- **解決方案**:
-  - 修正PWM週期為標準的0x8000
-  - 實現三層安全保護機制
-  - 移除有問題的查找表，改用實時計算
-  - 確保所有RGB值在安全範圍內
+### Phase 10: PWM Overflow Problem Resolution (v10.0)
+**Critical Issue**: Black flickering at medium brightness levels
+- **Root Cause**: Incorrect PWM period configuration
+  - Wrong setting: PWM period 0x9000, but MAX_DUTY 0x8000
+  - RGB values exceeding PWM period causing counter overflow
+- **Solution**:
+  - Corrected PWM period to standard 0x8000
+  - Implemented three-layer safety protection mechanism
+  - Removed problematic lookup table, switched to real-time calculation
+  - Ensured all RGB values within safe range
 
-### 階段11: 專注色彩展示 (v11.0 - 最終版)
-**目標**: 移除呼吸效果，專注展現所有顏色組合
-- **最終優化**:
-  - 移除呼吸亮度變化
-  - 固定亮度86% (鮮豔但不刺眼)
-  - 100%飽和度展現純正色彩
-  - 66Hz更新頻率 (15ms間隔)
-  - 隨機速度變化增加視覺豐富度
+### Phase 11: Focus on Color Showcase (v11.0 - Final Version)
+**Goal**: Remove breathing effect, focus on displaying all color combinations
+- **Final Optimization**:
+  - Removed breathing brightness variations
+  - Fixed brightness at 86% (vivid but not harsh)
+  - 100% saturation for pure color display
+  - 66Hz update frequency (15ms interval)
+  - Random speed variations for visual richness
 
-## 技術特色
+## Technical Features
 
-### PWM控制系統
-- **標準PWM範圍**: 0x0000 (0%) ~ 0x8000 (100%)
-- **解析度**: 32768步超高精度
-- **頻率**: 約1.46kHz (48MHz/32768)
-- **三重安全保護**: 計算層、轉換層、輸出層
+### PWM Control System
+- **Standard PWM Range**: 0x0000 (0%) ~ 0x8000 (100%)
+- **Resolution**: 32768 steps ultra-high precision
+- **Frequency**: ~1.46kHz (48MHz/32768)
+- **Triple Safety Protection**: Calculation layer, conversion layer, output layer
 
-### RGB色彩系統
-- **色彩空間**: HSV → RGB轉換
-- **色相範圍**: 完整360度色相環
-- **飽和度**: 100% (純色)
-- **亮度**: 固定86% (28,067/32768)
+### RGB Color System
+- **Color Space**: HSV → RGB conversion
+- **Hue Range**: Complete 360-degree hue wheel
+- **Saturation**: 100% (pure colors)
+- **Brightness**: Fixed 86% (28,067/32768)
 
-### Cree LED校準
+### Cree LED Calibration
 ```c
-// 基於CLP6C-FKB規格的色彩校準
-#define RED_SCALE_FACTOR    (100U)  // 紅色基準
-#define GREEN_SCALE_FACTOR  (85U)   // 綠色降低 (最亮)
-#define BLUE_SCALE_FACTOR   (110U)  // 藍色增強 (最暗)
+// Color calibration based on CLP6C-FKB specifications
+#define RED_SCALE_FACTOR    (100U)  // Red baseline
+#define GREEN_SCALE_FACTOR  (85U)   // Green reduced (brightest)
+#define BLUE_SCALE_FACTOR   (110U)  // Blue enhanced (dimmest)
 ```
 
-### 效能優化
-- **記憶體使用**: 最小化結構體設計
-- **計算效率**: 位移運算、直接計算
-- **更新頻率**: 66Hz平衡效能與流暢度
+### Performance Optimization
+- **Memory Usage**: Minimized structure design
+- **Computational Efficiency**: Bit shift operations, direct calculations
+- **Update Frequency**: 66Hz balancing performance and smoothness
 
-## 最終效果
+## Final Results
 
-### 視覺表現
-- ✅ **絲滑變化**: 66Hz高刷新率，無階梯感
-- ✅ **完整色譜**: 紅→橙→黃→綠→青→藍→紫→洋紅→紅
-- ✅ **純正色彩**: 100%飽和度，86%固定亮度
-- ✅ **隨機節奏**: 每輪循環速度不同
-- ✅ **無閃爍**: 完美的PWM範圍控制
+### Visual Performance
+- ✅ **Smooth Transitions**: 66Hz high refresh rate, no stepping
+- ✅ **Complete Spectrum**: Red→Orange→Yellow→Green→Cyan→Blue→Purple→Magenta→Red
+- ✅ **Pure Colors**: 100% saturation, 86% fixed brightness
+- ✅ **Random Rhythm**: Different speeds for each cycle
+- ✅ **No Flicker**: Perfect PWM range control
 
-### 技術指標
-- **色相解析度**: 360步 (1度/步)
-- **PWM解析度**: 32768步
-- **更新週期**: 15ms (66Hz)
-- **色彩準確度**: 基於LED datasheet校準
-- **系統穩定性**: 零溢出、零閃爍
+### Technical Specifications
+- **Hue Resolution**: 360 steps (1 degree/step)
+- **PWM Resolution**: 32768 steps
+- **Update Period**: 15ms (66Hz)
+- **Color Accuracy**: Calibrated based on LED datasheet
+- **System Stability**: Zero overflow, zero flicker
 
-## 開發工具
-- **IDE**: S32 Design Studio 3.5
-- **配置工具**: S32 Configuration Tool (.mex)
-- **編譯器**: GCC for ARM
-- **除錯器**: PNE (Pemicro Debug Interface)
-
-## 文件結構
+## Project Structure
 ```
 Pwm_example_S32K344_2/
-├── src/main.c                    # 主程式
-├── generate/                     # 自動生成的配置文件
+├── src/main.c                    # Main program
+├── generate/                     # Auto-generated configuration files
 │   ├── include/
 │   └── src/
-├── RTD/                          # Runtime驅動程式
-├── board/                        # 板級配置
-├── Project_Settings/             # 專案設定
-├── Pwm_Example_DS.mex           # S32配置文件
-└── README.md                    # 本文件
+├── RTD/                          # Runtime driver library
+├── board/                        # Board-level configuration
+├── Project_Settings/             # Project settings
+├── Pwm_Example_DS.mex           # S32 configuration file
+└── README.md                    # This file
 ```
 
-## 學習要點
+## Key Learning Points
 
-### PWM控制關鍵
-1. **週期設定**: 必須符合AUTOSAR標準 (0x8000)
-2. **溢出保護**: 確保佔空比不超過週期
-3. **eMIOS配置**: 避免Master Bus衝突
+### PWM Control Essentials
+1. **Period Setting**: Must comply with AUTOSAR standard (0x8000)
+2. **Overflow Protection**: Ensure duty cycle doesn't exceed period
+3. **eMIOS Configuration**: Avoid Master Bus conflicts
 
-### 色彩系統設計
-1. **HSV優勢**: 更直觀的色彩控制
-2. **硬體校準**: 根據LED特性調整
-3. **效能平衡**: 實時計算vs查找表
+### Color System Design
+1. **HSV Advantages**: More intuitive color control
+2. **Hardware Calibration**: Adjust based on LED characteristics
+3. **Performance Balance**: Real-time calculation vs lookup tables
 
-### 除錯技巧
-1. **配置分析**: 理解.mex生成的程式碼
-2. **硬體映射**: Pin → eMIOS → PWM通道對應
-3. **數值範圍**: 確保所有計算在有效範圍內
+### Debugging Techniques
+1. **Configuration Analysis**: Understand .mex generated code
+2. **Hardware Mapping**: Pin → eMIOS → PWM channel correspondence
+3. **Value Ranges**: Ensure all calculations within valid ranges
 
-## 致謝
-感謝在開發過程中的問題發現和解決方案討論，特別是PWM週期配置錯誤的及時糾正，以及對最終效果的確認和改進建議。
+## System Requirements
+- **IDE**: S32 Design Studio 3.5
+- **RTD**: S32K3 Runtime Driver Library 5.0.0
+- **Hardware**: S32K3X4EVB-T172 evaluation board
+- **LED**: Cree CLP6C-FKB or compatible RGB LED
+
+## Getting Started
+1. Import project into S32 Design Studio 3.5
+2. Ensure S32K3 RTD 5.0.0 is properly installed
+3. Connect RGB LED to specified pins (PTA29, PTA30, PTA31)
+4. Build and flash to S32K3X4EVB-T172 board
+5. Observe smooth RGB color transitions
+
+## Acknowledgments
+Thanks to the collaborative debugging process, especially the timely correction of PWM period configuration errors and confirmation of final effects with improvement suggestions.
 
 ---
-**專案狀態**: ✅ 完成  
-**最後更新**: 2025年  
-**版本**: v11.0 (RGB色彩展示最終版)
+**Project Status**: ✅ Completed  
+**Last Updated**: 2025  
+**Version**: v11.0 (RGB Color Showcase Final Version)  
+**IDE**: S32 Design Studio 3.5  
+**RTD**: S32K3 5.0.0
